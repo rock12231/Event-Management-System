@@ -99,49 +99,6 @@ This project demonstrates how to integrate Firebase authentication with an Angul
       }
     }
     ```
-
-### 3. Flask Setup
-
-1. Install Flask and Firebase Admin SDK:
-    ```bash
-    pip install Flask firebase-admin flask-cors
-    ```
-
-2. Set up Flask to verify Firebase tokens:
-    ```python
-    from flask import Flask, request, jsonify
-    import firebase_admin
-    from firebase_admin import credentials, auth
-    from flask_cors import CORS
-
-    app = Flask(__name__)
-    CORS(app, origins=["http://localhost:4200", "https://your-angular-app-domain"])
-
-    cred = credentials.Certificate('path/to/your/firebase-adminsdk.json')
-    firebase_admin.initialize_app(cred)
-
-    @app.route('/your-post-endpoint', methods=['POST'])
-    def post_data():
-        auth_header = request.headers.get('Authorization')
-        if not auth_header or not auth_header.startswith('Bearer '):
-            return jsonify({'error': 'Missing or invalid auth token'}), 401
-
-        id_token = auth_header.split(' ')[1]
-        try:
-            decoded_token = auth.verify_id_token(id_token)
-            user_id = decoded_token['uid']
-            data = request.get_json()
-            return jsonify({'message': 'Data received successfully', 'data': data}), 200
-        except Exception as e:
-            return jsonify({'error': 'Invalid token'}), 401
-
-    if __name__ == '__main__':
-        app.run(debug=True)
-    ```
-3. Add Firebase Admin SDK Configuration File:
-   - Place the `firebase-adminsdk.json` file (downloaded from Firebase) in your project directory.
-   - Ensure the path to the JSON file in `credentials.Certificate('path/to/your/firebase-adminsdk.json')` matches the location of your file.
-
 ## Running the Project
 
 1. **Angular:** 
@@ -149,13 +106,6 @@ This project demonstrates how to integrate Firebase authentication with an Angul
      ```bash
      ng serve
      ```
-
-2. **Flask:** 
-   - Run the Flask server:
-     ```bash
-     python app.py
-     ```
-
 ## Contributing
 
 Feel free to submit issues or pull requests. Contributions are welcome!
