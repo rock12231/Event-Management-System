@@ -80,14 +80,15 @@ export class EventService {
     if (snapshot.exists()) {
       const events = snapshot.val();
 
-      // Convert the object into an array with the format { eventId, ...eventDetails }
+      // Convert the object into an array with the format { eventId, ...eventDetails } also add userId
+
       return Object.keys(events).map((eventId) => {
         return {
           eventId,
-          ...events[eventId]
+          ...events[eventId],
+          userId: uid,
         };
       });
-
     } else {
       console.log('No data available for events');
       return [];
@@ -117,6 +118,25 @@ export class EventService {
       .catch((error) => {
         console.error('Error deleting event:', error);
       });
+  }
+
+
+  joinEvent(eventId: string): Promise<void> {
+    const currentUser = this.fauth.userData;
+    if (currentUser) {
+      const uid = currentUser.uid;
+      const eventRef = ref(this.db, `events/${eventId}/participants/${uid}`);
+      return set(eventRef, true)
+        .then(() => {
+          console.log('Event joined successfully');
+        })
+        .catch((error) => {
+          console.error('Error joining event:', error);
+        });
+    } else {
+      console.error('User is not authenticated');
+      return Promise.reject('User is not authenticated');
+    }
   }
 
 }

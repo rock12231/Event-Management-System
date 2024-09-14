@@ -37,4 +37,12 @@ export class UserEMSComponent {
   }
 
 
+  joinEvent(eventId: any) {
+    const url = `${eventId.userId}/${eventId.eventId}`;
+    this.eventService.joinEvent(url)
+      .then(() => console.log('Event joined successfully'))
+      .catch(err => console.error('Error joining event:', err));
+  }
+
+
 }
