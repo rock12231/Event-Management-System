@@ -36,9 +36,9 @@ export class FirebaseService {
     });
   }
 
-  logInWithGoogle() {
+  async logInWithGoogle() {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(this.auth, provider)
+    await signInWithPopup(this.auth, provider)
       .then((result) => {
         this.toastService.showToast('Signed in successfully', 'success', 'top-end');
         this.handleRoleRedirect(result.user);
@@ -50,36 +50,25 @@ export class FirebaseService {
   }
 
 
-   async handleRoleRedirect(user: any) {
+  async handleRoleRedirect(user: any) {
     // check role from database and redirect to the appropriate dashboard
     const refRole = ref(this.db, `users/${user.uid}/info`);
     await get(refRole).then((snapshot) => {
-      // update user variable with role
       user.role = snapshot.val().role;
-    this.SetUserData(user);
+      this.SetUserData(user);
       if (snapshot.exists()) {
         const userRole = snapshot.val();
         // upadate User role in local storage and interface
         user.role = userRole.role;
         localStorage.setItem('user', JSON.stringify(user));
         if (userRole.role) {
-          this.router.navigate(['dashboard/'+userRole.role, user.displayName]);
+          this.router.navigate(['dashboard/' + userRole.role, user.displayName]);
         } else {
           this.router.navigate(['/login']);
         }
       }
     });
   }
-    // if (user.role === 'Admin') {
-    //   this.router.navigate(['dashboard/admin', user.displayName]);
-    // } else if (user.role === 'User') {
-    //   this.router.navigate(['dashboard/user', user.displayName]);
-    // } else if (user.role === 'Organizer') {
-    //   this.router.navigate(['dashboard/organizer', user.displayName]);
-    // } else {
-    //   this.router.navigate(['/login']);
-    // }
-  // }
 
   logInWithEmailPassword(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
@@ -143,9 +132,7 @@ export class FirebaseService {
 
   async SetUserData(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('loadProfile', JSON.stringify(user?.uid));
     const userRef = ref(this.db, `users/${user.uid}/info`);
-    //  DATE TO STRING
     const currentDate = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
     const userData: User = {
       uid: user.uid,
@@ -155,10 +142,10 @@ export class FirebaseService {
       role: 'User',
       emailVerified: user.emailVerified,
     };
-  
+
     try {
       const snapshot = await get(userRef);
-  
+
       if (!snapshot.exists()) {
         await set(userRef, {
           ...userData,
@@ -168,6 +155,18 @@ export class FirebaseService {
     } catch (error) {
       console.error('Error saving user data', error);
       console.log('Error saving user data');
+    }
+  }
+
+  // Check if a user has a specific role
+  async isRole(uid: string, role: string): Promise<boolean> {
+    const roleRef = ref(this.db, `users/${uid}/info/role`);
+    const snapshot = await get(roleRef);
+    const userRole = snapshot.val();
+    if (userRole) {
+      return userRole === role;
+    } else {
+      return false;
     }
   }
 

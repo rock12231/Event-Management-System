@@ -35,6 +35,13 @@ export class NavComponent {
         this.activeRoute = event.urlAfterRedirects;
         this.isProfileActive = this.activeRoute.startsWith('/dashboard/');
       });
+
+      // if (this.user) {
+      //   this.router.navigate(['dashboard/'+this.user.role, this.user.displayName]);
+      // } else {
+      //   this.router.navigate(['/login']);
+      // }
+
   }
 
   navHome() {
@@ -48,8 +55,6 @@ export class NavComponent {
     }
     if (this.user.role) {
       this.router.navigate(['dashboard/'+this.user.role, this.user.displayName]);
-    } else {
-      this.router.navigate(['/login']);
     }
   }
 

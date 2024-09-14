@@ -1,10 +1,31 @@
+<!-- <div *ngIf="events.length > 0; else noEvents">
+    <h2>Upcoming Events</h2>
+    <ul>
+      <li *ngFor="let event of events">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.date }}</p>
+        <p><strong>Time:</strong> {{ event.time }}</p>
+        <p><strong>Organizer:</strong> {{ event.organizer }}</p>
+      </li>
+    </ul>
+  </div>
 
+
+  
+  <ng-template #noEvents>
+    <p>No events available.</p>
+  </ng-template>
+   -->
+
+  <!-- events =  [ { "-O6lXvL9pS4J8RfbpbCI": { "createdAt": "2024-09-14T17:19:11.535Z", "description": "Hacker House event", "endDate": "2024-09-30", "endTime": "00:00", "organizer": "uIOxOLE8SrZB5n9yiQnhrAbGqb22", "startDate": "2024-09-23", "startTime": "00:00", "title": "HH GOA" }, "-O6lZ6KMeilXakZ4lu-S": { "createdAt": "2024-09-14T17:24:22.753Z", "description": "dvdvdv", "endDate": "2024-09-29", "endTime": "22:59", "organizer": "uIOxOLE8SrZB5n9yiQnhrAbGqb22", "startDate": "2024-09-15", "startTime": "22:57", "title": "csdcsdc" }, "id": "uIOxOLE8SrZB5n9yiQnhrAbGqb22" } ] -->
+  <!-- <div>{{events|json}}</div> -->
 <!-- Call to action section-->
 <section class="py-5 bg-gradient-primary-to-secondary text-white">
     <div class="container px-5 my-5">
         <div class="text-center">
             <h2 class="display-4 fw-bolder mb-4">Create Event</h2>
-            <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder">Click Here</a>
+            <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" data-bs-toggle="modal" data-bs-target="#exampleModal">Click Here</a>
         </div>
     </div>
 </section>
@@ -17,24 +38,18 @@
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-11 col-xl-9 col-xxl-8">
                 <!-- Project Card 1-->
-                <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                <div *ngFor="let event of events" class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                     <div class="card-body p-0">
                         <div class="d-flex align-items-center">
                             <div class="p-5">
-                                <h2 class="fw-bolder">Project Name 1</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius at enim eum illum aperiam placeat esse? Mollitia omnis minima saepe recusandae libero, iste ad asperiores! Explicabo commodi quo itaque! Ipsam!</p>
-                            </div>
-                            <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
-                        </div>
-                    </div>
-                </div>
-                <!-- Project Card 2-->
-                <div class="card overflow-hidden shadow rounded-4 border-0">
-                    <div class="card-body p-0">
-                        <div class="d-flex align-items-center">
-                            <div class="p-5">
-                                <h2 class="fw-bolder">Project Name 2</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius at enim eum illum aperiam placeat esse? Mollitia omnis minima saepe recusandae libero, iste ad asperiores! Explicabo commodi quo itaque! Ipsam!</p>
+                                <h2 class="fw-bolder">{{event.title}}</h2>
+                                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius at enim eum illum aperiam placeat esse? Mollitia omnis minima saepe recusandae libero, iste ad asperiores! Explicabo commodi quo itaque! Ipsam!</p> -->
+                                <p>{{event.description}}</p>
+                                <p><strong>Date:</strong> {{event.startDate}} - {{event.endDate}}</p>
+                                <p><strong>Time:</strong> {{event.startTime}} - {{event.endTime}}</p>
+                                <p><strong>Organizer:</strong> {{event.organizer}}</p>
+                                <button class="btn btn-primary" (click)="deleteEvent(event.eventId)">Delete</button>
+                                <button class="btn btn-primary" (click)="editEvent(event.eventId)">Edit</button>
                             </div>
                             <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
                         </div>
@@ -44,12 +59,6 @@
         </div>
     </div>
 </section>
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,13 +68,40 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+        <form [formGroup]="eventForm" (ngSubmit)="createEvent()" class="container mt-4">
+            <div class="modal-body">
+                <div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input id="title" formControlName="title" type="text" class="form-control" placeholder="Enter title" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description" formControlName="description" class="form-control" placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Start Date:</label>
+                        <input id="date" formControlName="startDate" type="date" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Start Time:</label>
+                        <input id="time" formControlName="startTime" type="time" value="12:00" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">End Date:</label>
+                        <input id="date" formControlName="endDate" type="date" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="time" class="form-label">End Time:</label>
+                        <input id="time" formControlName="endTime" type="time" value="12:00" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </div>
+        </form>
       </div>
     </div>
   </div>
