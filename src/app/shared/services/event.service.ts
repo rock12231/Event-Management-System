@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Database, get, limitToLast, push, query, ref, set, update } from '@angular/fire/database';
 import { FirebaseService } from './firebase.service';
-import { from, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

@@ -67,7 +67,6 @@ export class NavComponent {
   }
 
   navLogin() {
-    localStorage.setItem('loadProfile', JSON.stringify(this.user?.uid));
     this.router.navigate(['/login']);
   }
 

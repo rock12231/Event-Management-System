@@ -20,85 +20,45 @@ export class FirebaseService {
     public db: Database,
     private toastService: ToastAlertService
   ) {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user: any) => {
       if (user) {
+        const userRef = ref(this.db, `users/${user.uid}/info`);
+        await get(userRef).then((snapshot) => {
+          if (snapshot.exists()) {
+            const userRole = snapshot.val();
+            if (userRole.role) {
+              user.role = userRole.role;
+            }
+          }
+        });
         this.userData = user;
-        if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem('user', JSON.stringify(user));
-          JSON.parse(localStorage.getItem('user')!);
-        }
+        this.setLocalStorage(user);
       } else {
-        if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem('user', 'null');
-          JSON.parse(localStorage.getItem('user')!);
-        }
+        this.clearLocalStorage();
       }
     });
   }
 
   async logInWithGoogle() {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(this.auth, provider)
-      .then((result) => {
-        this.toastService.showToast('Signed in successfully', 'success', 'top-end');
-        this.handleRoleRedirect(result.user);
-      })
-      .catch((error) => {
-        this.toastService.showToast('Error signing in', 'error', 'top-end');
-        console.error('Error signing in', error);
-      });
-  }
+    try {
+      const result = await signInWithPopup(this.auth, provider);
+      const user = result.user;
+      await this.SetUserData(user);
 
+      const refRole = ref(this.db, `users/${user.uid}/info`);
+      const snapshot = await get(refRole);
+      const userRole = snapshot.val();
 
-  async handleRoleRedirect(user: any) {
-    // check role from database and redirect to the appropriate dashboard
-    const refRole = ref(this.db, `users/${user.uid}/info`);
-    await get(refRole).then((snapshot) => {
-      user.role = snapshot.val().role;
-      this.SetUserData(user);
-      if (snapshot.exists()) {
-        const userRole = snapshot.val();
-        // upadate User role in local storage and interface
-        user.role = userRole.role;
-        localStorage.setItem('user', JSON.stringify(user));
-        if (userRole.role) {
-          this.router.navigate(['dashboard/' + userRole.role, user.displayName]);
-        } else {
-          this.router.navigate(['/login']);
-        }
+      if (userRole && userRole.role) {
+        this.router.navigate(['dashboard/' + userRole.role, userRole.displayName || user.displayName]);
+      } else {
+        this.router.navigate(['/login']);
       }
-    });
-  }
-
-  logInWithEmailPassword(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        this.SetUserData(userCredential.user);
-        this.router.navigate(['dashboard/user', userCredential.user.displayName]);
-        this.toastService.showToast('Signed in successfully', 'success', 'top-end');
-        // console.log('Signed in successfully', userCredential.user);
-      })
-      .catch((error) => {
-        this.toastService.showToast('Error signing in', 'error', 'top-end');
-        console.error('Error signing in', error);
-      });
-  }
-
-  registerWithEmailPassword(email: string, password: string, displayName: string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        updateProfile(userCredential.user, {
-          displayName: displayName,
-        });
-        this.SetUserData(userCredential.user);
-        this.router.navigate(['dashboard/user', userCredential.user.displayName]);
-        this.toastService.showToast('Signed in successfully', 'success', 'top-end');
-        // console.log('Signed in successfully', userCredential.user);
-      })
-      .catch((error) => {
-        this.toastService.showToast('Error signing in', 'error', 'top-end');
-        console.error('Error signing in', error);
-      });
+    } catch (error) {
+      this.toastService.showToast('Error signing in', 'error', 'top-end');
+      console.error('Error signing in', error);
+    }
   }
 
   get isLoggedIn(): boolean {
@@ -120,44 +80,66 @@ export class FirebaseService {
       });
   }
 
-  logout() {
-    this.auth.signOut().then(() => {
-      localStorage.clear();
-      this.router.navigate(['login']);
-      this.toastService.showToast('Logout successfully', 'success', 'top-end');
-      this.userData = null;
-
-    });
+  async logout() {
+    await this.auth.signOut();
+    this.clearLocalStorage();
+    this.router.navigate(['login']);
+    this.toastService.showToast('Logout successfully', 'success', 'top-end');
+    this.userData = null;
   }
 
   async SetUserData(user: any) {
-    localStorage.setItem('user', JSON.stringify(user));
     const userRef = ref(this.db, `users/${user.uid}/info`);
-    const currentDate = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const currentDate = new Date();
+    const formattedDate = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  
     const userData: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      role: 'User',
       emailVerified: user.emailVerified,
+      role: 'user' // Default role if not found in DB
     };
-
+  
     try {
       const snapshot = await get(userRef);
-
+  
+      // If user data doesn't exist in the database, set it
       if (!snapshot.exists()) {
         await set(userRef, {
           ...userData,
-          joinAt: currentDate,
+          joinAt: formattedDate,
         });
+      } else {
+        // If user data exists, retrieve the role and update the user object
+        const dbUserData = snapshot.val();
+        if (dbUserData.role) {
+          userData.role = dbUserData.role; // Update the role in userData
+        }
       }
+  
+      // Update the user object with the role and save it to localStorage
+      const updatedUser = { ...user, role: userData.role };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      localStorage.setItem('loadProfile', JSON.stringify(user?.uid));
+  
     } catch (error) {
       console.error('Error saving user data', error);
-      console.log('Error saving user data');
+    }
+  }
+  
+  private setLocalStorage(user: any) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('user', JSON.stringify(user));
     }
   }
 
+  private clearLocalStorage() {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('user', 'null');
+    }
+  }
   // Check if a user has a specific role
   async isRole(uid: string, role: string): Promise<boolean> {
     const roleRef = ref(this.db, `users/${uid}/info/role`);
