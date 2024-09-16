@@ -71,6 +71,10 @@ This project is an Event Management System built using Angular and Firebase Real
    - Place the `firebase-adminsdk.json` file (downloaded from Firebase) in your project directory.
    - Ensure the path to the JSON file in `credentials.Certificate('path/to/your/firebase-adminsdk.json')` matches the location of your file.
 
+3. Add .env Configuration File for Email:
+    - `.env` at root of the folder with
+    ```MAIL_USERNAME=your_gmail_username@gmail.com                                                          MAIL_PASSWORD=your_gmail_password```
+
 ## Running the Project
 
 1. **Angular:** 
