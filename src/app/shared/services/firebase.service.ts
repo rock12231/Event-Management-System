@@ -20,17 +20,24 @@ export class FirebaseService {
     public db: Database,
     private toastService: ToastAlertService
   ) {
+    // Listen for changes in authentication state
     auth.onAuthStateChanged(async (user: any) => {
       if (user) {
+        // Fetch user role from Firebase Database
         const userRef = ref(this.db, `users/${user.uid}/info`);
-        await get(userRef).then((snapshot) => {
+        try {
+          const snapshot = await get(userRef);  // Wait for the role to be fetched
           if (snapshot.exists()) {
             const userRole = snapshot.val();
             if (userRole.role) {
-              user.role = userRole.role;
+              user.role = userRole.role; // Update the user object with the role
             }
           }
-        });
+        } catch (error) {
+          console.error('Error fetching user role:', error);
+        }
+
+        // After role is fetched, set the user data in localStorage
         this.userData = user;
         this.setLocalStorage(user);
       } else {
@@ -38,6 +45,7 @@ export class FirebaseService {
       }
     });
   }
+
 
   async logInWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -92,7 +100,7 @@ export class FirebaseService {
     const userRef = ref(this.db, `users/${user.uid}/info`);
     const currentDate = new Date();
     const formattedDate = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
-  
+
     const userData: User = {
       uid: user.uid,
       email: user.email,
@@ -101,10 +109,10 @@ export class FirebaseService {
       emailVerified: user.emailVerified,
       role: 'user' // Default role if not found in DB
     };
-  
+
     try {
       const snapshot = await get(userRef);
-  
+
       // If user data doesn't exist in the database, set it
       if (!snapshot.exists()) {
         await set(userRef, {
@@ -118,17 +126,16 @@ export class FirebaseService {
           userData.role = dbUserData.role; // Update the role in userData
         }
       }
-  
+
       // Update the user object with the role and save it to localStorage
       const updatedUser = { ...user, role: userData.role };
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      localStorage.setItem('loadProfile', JSON.stringify(user?.uid));
-  
+
     } catch (error) {
       console.error('Error saving user data', error);
     }
   }
-  
+
   private setLocalStorage(user: any) {
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('user', JSON.stringify(user));

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EventService } from '../../shared/services/event.service';
 import { CommonModule } from '@angular/common';
+import { Database, get, ref } from '@angular/fire/database';
 
 @Component({
   selector: 'app-user-ems',
@@ -13,8 +14,13 @@ import { CommonModule } from '@angular/common';
 export class UserEMSComponent {
   eventForm: FormGroup;
   events: any
+  user : any
 
-  constructor(private fb: FormBuilder, private eventService: EventService) {
+  constructor(private fb: FormBuilder, private eventService: EventService, private db: Database,) {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('user')) {
+      this.user = localStorage.getItem('user');
+      this.user = JSON.parse(this.user);
+    }
     this.eventForm = this.fb.group({
       title: [''],
       description: [''],
@@ -37,12 +43,18 @@ export class UserEMSComponent {
   }
 
 
-  joinEvent(eventId: any) {
-    const url = `${eventId.userId}/${eventId.eventId}`;
+  joinEvent(event: any) {
+    const url = `${event.userId}/${event.eventId}`;
     this.eventService.joinEvent(url)
       .then(() => console.log('Event joined successfully'))
       .catch(err => console.error('Error joining event:', err));
   }
 
+  withdrawFromEvent(event: any) {
+    const url = `${event.userId}/${event.eventId}`;
+    // this.eventService.withdrawFromEvent(url)
+    //   .then(() => console.log('Event withdrawn successfully'))
+    //   .catch(err => console.error('Error withdrawing from event:', err));
+  }
 
 }

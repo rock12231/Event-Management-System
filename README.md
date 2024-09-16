@@ -1,8 +1,21 @@
-# Angular to Flask Secure API Request With Firebase Auth
+# Event Management System
 
-This project demonstrates how to integrate Firebase authentication with an Angular frontend and a Flask backend. It enables secure API requests from the Angular application to the Flask API using Firebase authentication tokens.
+## Project Overview
+
+This project is an Event Management System built using Angular and Firebase Realtime Database. The application enables users to manage events, send reminders, and handle RSVPs. It also supports role-based access control, allowing different levels of access for Admins, Organizers, and Users. Additionally, the system tracks user activity and can send in-app notifications.
 
 ## Features
+
+- **Event Management:** Create, view, update, and delete events.
+- **RSVP Management:** Attendees can RSVP for events.
+- **User Roles:**
+    - Admin: Manages all events and users.
+    - Organizer: Creates and manages their own events.
+    - User: Views events and RSVPs.
+- **Notifications:** Send reminders for events.
+- **QR Code Generation:** Automatically generate a QR code for each event.
+- **Activity Tracking:** Track user activity such as logins, RSVPs, and event creation.
+- **Firebase Authentication:** Google-based authentication for users.
 
 - **Firebase Authentication:** Uses Firebase to manage user authentication and retrieve Firebase ID tokens.
 - **Angular Frontend:** Handles user sign-in and includes a service to make authenticated API requests.
@@ -11,7 +24,7 @@ This project demonstrates how to integrate Firebase authentication with an Angul
 
 ## Prerequisites
 
-- Firebase account and project
+- Firebase account and project with Auth Realtime database Storage
 - Angular CLI
 - Flask environment setup
 - Python and `pip` installed
@@ -48,57 +61,16 @@ This project demonstrates how to integrate Firebase authentication with an Angul
         ```
     - Configure Firebase authentication in your Angular app.
 
-3. Create the `AuthService` to handle user sign-in and token retrieval:
-    ```typescript
-    import { Injectable } from '@angular/core';
-    import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
+### 3. Flask Setup
 
-    @Injectable({
-      providedIn: 'root',
-    })
-    export class AuthService {
-      constructor(private afAuth: Auth) {}
-
-      async signInWithGoogle() {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(this.afAuth, provider);
-        return result.user;
-      }
-
-      async getAuthToken(): Promise<string | null> {
-        const user = this.afAuth.currentUser;
-        if (user) {
-          return user.getIdToken();
-        }
-        return null;
-      }
-    }
+1. Install Flask and Firebase Admin SDK:
+    ```bash
+    pip install Flask firebase-admin flask-cors
     ```
+2. Add Firebase Admin SDK Configuration File:
+   - Place the `firebase-adminsdk.json` file (downloaded from Firebase) in your project directory.
+   - Ensure the path to the JSON file in `credentials.Certificate('path/to/your/firebase-adminsdk.json')` matches the location of your file.
 
-4. Implement an API service to make authenticated requests:
-    ```typescript
-    import { Injectable } from '@angular/core';
-    import { HttpClient, HttpHeaders } from '@angular/common/http';
-    import { AuthService } from './auth.service';
-
-    @Injectable({
-      providedIn: 'root',
-    })
-    export class ApiService {
-      private flaskApiUrl = 'https://your-flask-api-url.com/your-post-endpoint';
-
-      constructor(private http: HttpClient, private authService: AuthService) {}
-
-      async postData(data: any) {
-        const token = await this.authService.getAuthToken();
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-        });
-
-        return this.http.post(this.flaskApiUrl, data, { headers }).toPromise();
-      }
-    }
-    ```
 ## Running the Project
 
 1. **Angular:** 
@@ -106,6 +78,13 @@ This project demonstrates how to integrate Firebase authentication with an Angul
      ```bash
      ng serve
      ```
+
+2. **Flask:** 
+   - Run the Flask server:
+     ```bash
+     python app.py
+     ```
+
 ## Contributing
 
 Feel free to submit issues or pull requests. Contributions are welcome!

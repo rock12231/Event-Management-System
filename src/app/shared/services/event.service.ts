@@ -24,6 +24,7 @@ export class EventService {
     const currentUser = await this.fauth.userData
     if (currentUser) {
       const uid = currentUser.uid;
+      const name = currentUser.displayName;
       // Check if the user has the 'Organizer' role
       const isOrganizer = await this.fauth.isRole(uid, 'organizer');
       if (isOrganizer) {
@@ -36,6 +37,7 @@ export class EventService {
           endDate: eventData.endDate,
           endTime: eventData.endTime,
           organizer: uid,
+          organizerName: name,
           createdAt: new Date().toISOString(),
         };
         await push(eventRef, newEvent);
@@ -65,28 +67,31 @@ export class EventService {
   }
 
   // Function to retrieve all events (limited by a query)
-  async getAllEvents(limit: number): Promise<any[]> {
+  async getAllEvents(limit: number, id?:any): Promise<any[]> {
     const currentUser = await this.fauth.userData
-    const uid = currentUser.uid;
+    const uid = currentUser.uid?currentUser.uid:this.user.uid;
     if (!uid) {
       console.error('User is not authenticated');
       return [];
     }
-    const eventRef = ref(this.db, `events/${uid}`);
+    const eventRef = ref(this.db, `events/`);
     const queryRef = query(eventRef, limitToLast(limit));
     const snapshot = await get(queryRef);
 
+    console.log('Snapshot:', snapshot.val());
     if (snapshot.exists()) {
       const events = snapshot.val();
 
       // Convert the object into an array with the format { eventId, ...eventDetails } also add userId
 
-      return Object.keys(events).map((eventId) => {
-        return {
-          eventId,
-          ...events[eventId],
-          userId: uid,
-        };
+      return Object.keys(events).flatMap((userId) => {
+        return Object.keys(events[userId]).map((eventId) => {
+          return {
+            eventId,
+            userId,
+            ...events[userId][eventId],
+          };
+        });
       });
     } else {
       console.log('No data available for events');

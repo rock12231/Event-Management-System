@@ -14,8 +14,13 @@ export class OrganizerEMSComponent {
 
   eventForm: FormGroup;
   events: any
+  user : any
 
   constructor(private fb: FormBuilder, private eventService: EventService) {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('user')) {
+      this.user = localStorage.getItem('user');
+      this.user = JSON.parse(this.user);
+    }
     this.eventForm = this.fb.group({
       title: [''],
       description: [''],
@@ -30,7 +35,7 @@ export class OrganizerEMSComponent {
   async ngOnInit() {
      // Call the getAllEvents function with a limit of 100 events
      try {
-      this.events = await this.eventService.getAllEvents(100);
+      this.events = await this.eventService.getAllEvents(100,this.user.uid);
       console.log('Events:', this.events);  // Now this will log only the event values
     } catch (error) {
       console.error('Error fetching events:', error);

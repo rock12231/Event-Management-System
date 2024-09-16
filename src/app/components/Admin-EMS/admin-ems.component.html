@@ -14,16 +14,18 @@
                             <div class="p-5">
                                 <h2 class="fw-bolder">{{user.displayName}}</h2>
                                 <p>Email: {{ user.email }}</p>
-                                <p>Email Verified: {{ user.emailVerified ? 'Yes' : 'No' }}</p>
                                 <p>Join At: {{ user.joinAt }}</p>
+                            </div>
+                            <div class="d-block">
+                                <img class="img-fluid" [src]="user.photoURL" alt="{{ user.displayName }}" />
+                                <hr>
                                 <select #role (change)="editRole(user, role.value)" class="form-select" aria-label="Default select example">
-                                    <option selected>Current Role {{user.role}}</option>
+                                    <option selected>Current Role {{user.role|titlecase}}</option>
                                     <option value="user">User</option>
                                     <option value="admin">Admin</option>
                                     <option value="organizer">Organizer</option>
                                 </select>
                             </div>
-                            <img class="img-fluid" [src]="user.photoURL" alt="{{ user.displayName }}" />
                         </div>
                     </div>
                 </div>

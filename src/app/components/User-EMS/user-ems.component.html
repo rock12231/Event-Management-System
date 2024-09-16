@@ -20,18 +20,23 @@
                     <div class="card-body p-0">
                         <div class="d-flex align-items-center">
                             <div class="p-5">
-                                <h2 class="fw-bolder">{{event.title}}</h2>
-                                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius at enim eum illum aperiam placeat esse? Mollitia omnis minima saepe recusandae libero, iste ad asperiores! Explicabo commodi quo itaque! Ipsam!</p> -->
-                                <p>{{event.description}}</p>
-                                <p><strong>Date:</strong> {{event.startDate}} - {{event.endDate}}</p>
-                                <p><strong>Time:</strong> {{event.startTime}} - {{event.endTime}}</p>
-                                <p><strong>Organizer:</strong> {{event.organizer}}</p>
-                                <button class="btn btn-primary" (click)="joinEvent(event)">Join Event</button>
+                                <h2 class="fw-bolder">{{ event.title }}</h2>
+                                <p>{{ event.description }}</p>
+                                <span class="d-block"><strong>Date:</strong> {{ event.startDate }} TO {{ event.endDate }}</span>
+                                <span class="d-block"><strong>Time:</strong> {{ event.startTime }} TO {{ event.endTime }} </span>
+                                <span class="d-block"><strong>Organizer:</strong> {{ event.organizerName ? event.organizerName : event.organizer }}</span>
+                                <ng-container *ngIf="event.participants && event.participants[user?.uid]; else joinButton">
+                                    <button class="btn btn-danger" (click)="withdrawFromEvent(event)">Withdraw from Event</button>
+                                </ng-container>
+                                <ng-template #joinButton>
+                                    <button class="btn btn-primary" (click)="joinEvent(event)">Join Event</button>
+                                </ng-template>
                             </div>
-                            <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                            <img class="img-fluid" src="https://dummyimage.com/200x300/343a40/6c757d" alt="..." />
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
