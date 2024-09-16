@@ -20,7 +20,7 @@ mail = Mail(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    return "Hello, World!"
+    return "Hello, API is running!"
 
 @app.route('/test', methods=['POST'])
 def post_data():
