@@ -11,7 +11,7 @@ app.config.from_object(Config)
 
 CORS(app, origins=["http://localhost:4200", "*"])
 
-# Initialize Firebase Admin SDK
+# Initialize Firebase Admin SDK //     "/etc/secrets/<filename>"
 cred = credentials.Certificate('credentials.json')  # Path to your service account key JSON
 firebase_admin.initialize_app(cred)
 

@@ -69,6 +69,28 @@ export class FirebaseService {
     }
   }
 
+
+  async logInWithEmailPassword(email: string, password: string) {
+    try {
+      const result = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = result.user;
+      await this.SetUserData(user);
+
+      const refRole = ref(this.db, `users/${user.uid}/info`);
+      const snapshot = await get(refRole);
+      const userRole = snapshot.val();
+
+      if (userRole && userRole.role) {
+        this.router.navigate(['dashboard/' + userRole.role, userRole.displayName || user.displayName]);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      this.toastService.showToast('Error signing in', 'error', 'top-end');
+      console.error('Error signing in', error);
+    }
+  }
+
   get isLoggedIn(): boolean {
     if (typeof window !== 'undefined' && window.localStorage) {
       const user = JSON.parse(localStorage.getItem('user')!);
@@ -147,6 +169,7 @@ export class FirebaseService {
       localStorage.setItem('user', 'null');
     }
   }
+
   // Check if a user has a specific role
   async isRole(uid: string, role: string): Promise<boolean> {
     const roleRef = ref(this.db, `users/${uid}/info/role`);
@@ -158,5 +181,14 @@ export class FirebaseService {
       return false;
     }
   }
+
+    // Get Firebase auth token
+    async getAuthToken(): Promise<string | null> {
+      const user = this.auth.currentUser;
+      if (user) {
+        return user.getIdToken();
+      }
+      return null;
+    }
 
 }

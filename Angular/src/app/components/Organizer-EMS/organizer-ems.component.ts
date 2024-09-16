@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventService } from '../../shared/services/event.service';
 import { CommonModule } from '@angular/common';
+import { MailService } from '../../shared/services/mail.service';
 
 @Component({
   selector: 'app-organizer-ems',
@@ -16,7 +17,11 @@ export class OrganizerEMSComponent {
   events: any
   user : any
 
-  constructor(private fb: FormBuilder, private eventService: EventService) {
+  constructor(
+    private fb: FormBuilder, 
+    private eventService: EventService,
+    private mailService: MailService
+  ) {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('user')) {
       this.user = localStorage.getItem('user');
       this.user = JSON.parse(this.user);
@@ -31,7 +36,6 @@ export class OrganizerEMSComponent {
     });
   }
 
-
   async ngOnInit() {
      // Call the getAllEvents function with a limit of 100 events
      try {
@@ -42,11 +46,34 @@ export class OrganizerEMSComponent {
     }
   }
 
+  async sendEventCreated() {
+    const eventData = {
+      email: 'recipient@example.com',
+      name: 'John Doe',
+      event_title: 'Annual Gala',
+      event_date: '2024-12-15',
+      event_location: 'City Hall'
+    };
+
+    try {
+      const response$ = await this.mailService.sendEventCreatedMail(eventData);
+      response$.subscribe(response => {
+        console.log('Event Created Mail Sent', response);
+      });
+    } catch (error) {
+      console.error('Error sending email', error);
+    }
+  }
+
+
+
   // Function to create an event
   createEvent() {
     const eventData = this.eventForm.value;
     this.eventService.createEvent(eventData)
-      .then(() => console.log('Event creation initiated'))
+      .then(() => {
+        this.sendEventCreated();
+        console.log('Event creation initiated')})
       .catch(err => console.error('Error creating event:', err));
   }
 
