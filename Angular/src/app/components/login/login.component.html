@@ -21,11 +21,11 @@
                             <input class="form-control" #password id="password" type="password" placeholder="Xyx@123" data-sb-validations="required,password" />
                             <label for="email">Password</label>
                         </div>
-                        <div class="d-grid" (click)="this.fauth.logInWithEmailPassword(email.value, password.value)" ><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Login With Email Password</button></div>
+                        <div class="d-grid" (click)="this.fauth.logInWithEmailPassword(email.value, password.value)" ><button class="btn btn-primary btn-lg disabled" id="submitButtonEmailPassword" type="submit">Login With Email Password</button></div>
                     </form>
                     <hr>
                     <form id="contactFormGoogle">
-                        <div class="d-grid" (click)="this.fauth.logInWithGoogle()"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Login With Google</button></div>
+                        <div class="d-grid" (click)="this.fauth.logInWithGoogle()"><button class="btn btn-primary btn-lg disabled" id="submitButtonGoogle" type="submit">Login With Google</button></div>
                     </form>
                 </div>
             </div>

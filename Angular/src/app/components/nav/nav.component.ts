@@ -59,19 +59,19 @@ export class NavComponent {
   }
 
   navContact() {
-    this.router.navigate(['/contact']); 
+    this.router.navigate(['contact']); 
   }
 
   navAbout() {
-    this.router.navigate(['/about']);
+    this.router.navigate(['about']);
   }
 
   navLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
   navProfile() {
-    this.router.navigate(['/profile', this.user?.displayName]);
+    this.router.navigate(['profile/', this.user?.displayName]);
   }
 
   logout() {

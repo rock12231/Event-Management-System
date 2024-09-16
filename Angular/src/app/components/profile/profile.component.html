@@ -10,45 +10,33 @@
                 <div class="card shadow border-0 rounded-4 mb-5">
                     <div class="card-body p-5">
                         <div class="row align-items-center gx-5">
-                            <!-- createdAt
-                                : 
-                                "1726345029591"
-                                displayName
-                                : 
-                                "AVINASH KUMAR HBTU"
-                                email
-                                : 
-                                "210231017@hbtu.ac.in"
-                                emailVerified
-                                : 
-                                true
-                                isAnonymous
-                                : 
-                                false
-                                lastLoginAt
-                                : 
-                                "1726446165256"
-                                photoURL
-                                : 
-                                "https://lh3.googleusercontent.com/a/ACg8ocLb0Roy2pk-tnYXImnqNvXt8AWyaXJrCo7x1Nl7camEBk9Bww=s96-c"
-
-                                uid
-                                :
-                                "esfesjciuhweiu fwekf3u434534n5kbt5g"
-                                -->
-                                <!-- draw the html to render the above code with circle profile photo -->
+                            <!-- create profile card  -->
                             <div class="col text-center text-lg-start mb-4 mb-lg-0">
                                 <div class="bg-light p-4 rounded-4">
-                                    <div class="text-primary fw-bolder mb-2">2019 - Present</div>
-                                    <div class="small fw-bolder">Web Developer</div>
-                                    <div class="small text-muted">Stark Industries</div>
-                                    <div class="small text-muted">Los Angeles, CA</div>
-
-
-                                </div> 
-                                <img class="img-fluid rounded-circle" src="https://lh3.googleusercontent.com/a/ACg8ocLb0Roy2pk-tnYXImnqNvXt8AWyaXJrCo7x1Nl7camEBk9Bww=s96-c" alt="..." />
-
+                                    <div class="text-primary fw-bolder mb-2">{{user.displayName}}</div>
+                                    <div class="small fw-bolder">{{user.email}}</div>
+                                    <div class="small text
+                                    -muted">{{user.email}}</div>
                                 </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>
+                                    <img class="img-fluid" [src]="user.photoURL" alt="{{user.displayName}}" />
+                                </div>
+                            </div>
+                            
+                            <!-- displayName
+                                "AVINASH KUMAR HBTU"
+                                email
+                                "210231017@hbtu.ac.in"
+                                photoURL
+                                "https://lh3.googleusercontent.com/a/ACg8ocLb0Roy2pk-tnYXImnqNvXt8AWyaXJrCo7x1Nl7camEBk9Bww=s96-c"
+                               
+                               draw the html to render the above value coming in this.user with circle profile photo -->
+                            
+
+                     
+
 
                             
                         </div>

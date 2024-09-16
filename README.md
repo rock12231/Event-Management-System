@@ -90,6 +90,7 @@ This project is an Event Management System built using Angular and Firebase Real
      python app.py
      ```
    - Global Link: `https://ems-r7a4.onrender.com/`
+        - *Note* : Firts api hit take 50 sec to start the server , `Render.com` Policy
 
 ## Contributing
 

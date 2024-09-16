@@ -23,6 +23,7 @@ export class FirebaseService {
     // Listen for changes in authentication state
     auth.onAuthStateChanged(async (user: any) => {
       if (user) {
+            // await updateProfile(user, { displayName: "user" });
         // Fetch user role from Firebase Database
         const userRef = ref(this.db, `users/${user.uid}/info`);
         try {
