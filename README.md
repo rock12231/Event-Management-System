@@ -82,12 +82,14 @@ This project is an Event Management System built using Angular and Firebase Real
      ```bash
      ng serve
      ```
+   - Global Link: `https://event-management-system-da757.web.app/`
 
 2. **Flask:** 
    - Run the Flask server:
      ```bash
      python app.py
      ```
+   - Global Link: `https://ems-r7a4.onrender.com/`
 
 ## Contributing
 
