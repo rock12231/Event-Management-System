@@ -53,7 +53,7 @@ This project is an Event Management System built using Angular and Firebase Real
             production: false,
             apiUrl: 'http://127.0.0.1:5000/api',
             firebaseConfig: {
-                apiKey: "AIzaSyCfVXutIRBAZCdMOhkOt_fDtRl6ciPByKk",
+                apiKey: "AIzaSyCfVXutIRBAZCdMOhkOt_fDtRl6crtByKk",
                 authDomain: "event-management-system-da757.firebaseapp.com",
                 databaseURL: "https://event-management-system-da757-default-rtdb.firebaseio.com",
                 projectId: "event-management-system-da757",
@@ -69,7 +69,7 @@ This project is an Event Management System built using Angular and Firebase Real
             production: true,
             apiUrl: 'http://server-address.here/api',
             firebaseConfig: {
-                apiKey: "AIzaSyCfVXutIRBAZCdMOhkOt_fDtRl6ciPByKk",
+                apiKey: "AIzaSyCfVXutIRBAZCdMOhkOt_fDtghh6ciPByKk",
                 authDomain: "event-management-system-da757.firebaseapp.com",
                 databaseURL: "https://event-management-system-da757-default-rtdb.firebaseio.com",
                 projectId: "event-management-system-da757",
