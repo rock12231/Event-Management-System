@@ -4,6 +4,9 @@
 
 This project is an Event Management System built using Angular and Firebase Realtime Database. The application enables users to manage events, send reminders, and handle RSVPs. It also supports role-based access control, allowing different levels of access for Admins, Organizers, and Users. Additionally, the system tracks user activity and can send in-app notifications.
 
+- [**Angular Live ↗**](https://event-management-system-da757.web.app)
+- [**Flask API Live ↗**](https://ems-r7a4.onrender.com/)
+
 ## Features
 
 - **Event Management:** Create, view, update, and delete events.
@@ -45,19 +48,37 @@ This project is an Event Management System built using Angular and Firebase Real
     ```
 
 2. Set up Firebase in your Angular project:
-    - Add Firebase configuration to `src/environments/environment.ts`.
+    - Add Firebase configuration to `src/environments/environment.ts` Local.
+        ``` export const environment = {
+            production: false,
+            apiUrl: 'http://127.0.0.1:5000/api',
+            firebaseConfig: {
+                apiKey: "AIzaSyCfVXutIRBAZCdMOhkOt_fDtRl6ciPByKk",
+                authDomain: "event-management-system-da757.firebaseapp.com",
+                databaseURL: "https://event-management-system-da757-default-rtdb.firebaseio.com",
+                projectId: "event-management-system-da757",
+                storageBucket: "event-management-system-da757.appspot.com",
+                messagingSenderId: "436067414791",
+                appId: "1:436067414791:web:53f173fdd721c7bacfcba2",
+                measurementId: "G-RSVTBY8JW0"
+            }
+        }; 
+        ```
+    - Add Firebase configuration to `src/environments/environment.ts` Production.
         ``` export const environment = {
             production: true,
+            apiUrl: 'http://server-address.here/api',
             firebaseConfig: {
-                    apiKey: "",
-                    authDomain: "",
-                    databaseURL: "",
-                    projectId: "",
-                    messagingSenderId: "",
-                    appId: "",
-                    measurementId: ""
-                }
-            }; 
+                apiKey: "AIzaSyCfVXutIRBAZCdMOhkOt_fDtRl6ciPByKk",
+                authDomain: "event-management-system-da757.firebaseapp.com",
+                databaseURL: "https://event-management-system-da757-default-rtdb.firebaseio.com",
+                projectId: "event-management-system-da757",
+                storageBucket: "event-management-system-da757.appspot.com",
+                messagingSenderId: "436067414791",
+                appId: "1:436067414791:web:53f173fdd721c7bacfcba2",
+                measurementId: "G-RSVTBY8JW0"
+            }
+        };
         ```
     - Configure Firebase authentication in your Angular app.
 
@@ -82,6 +103,17 @@ This project is an Event Management System built using Angular and Firebase Real
      ```bash
      ng serve
      ```
+     
+    - Production Build
+        ```bash
+        ng serve --configuration production
+        ```
+    
+    - For a production build:
+        ```bash
+        ng build --configuration production
+        ```
+
    - Global Link: `https://event-management-system-da757.web.app/`
 
 2. **Flask:** 
