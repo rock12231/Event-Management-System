@@ -64,11 +64,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "proxyConfig": "src/proxy.local.json"
+            "proxyConfig": "proxy.local.json"
           },
           "configurations": {
             "production": {
-              "proxyConfig": "src/proxy.prod.json",
+              "proxyConfig": "proxy.prod.json",
               "buildTarget": "projectTest:build:production"
             },
             "development": {

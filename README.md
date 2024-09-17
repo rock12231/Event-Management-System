@@ -92,6 +92,89 @@ This project is an Event Management System built using Angular and Firebase Real
    - Global Link: `https://ems-r7a4.onrender.com/`
         - *Note* : Firts api hit take 50 sec to start the server , `Render.com` Policy
 
+
+## Project Structure 
+
+1. **Angular:** 
+
+    ```bash
+    📂 event-management-system/
+    │
+    ├── 📂 src/
+    │   ├── 📂 app/
+    │   │   ├── 📄 app.component.css
+    │   │   ├── 📄 app.component.html
+    │   │   ├── 📄 app.component.ts
+    │   │   ├── 📄 app.config.ts
+    │   │   ├── 📄 app.routes.ts
+    │   │   ├── 📄 auth.service.ts
+    │   │   ├── 📂 components/
+    │   │   │   ├── 📂 about/
+    │   │   │   ├── 📂 Admin-EMS/
+    │   │   │   ├── 📂 base/
+    │   │   │   ├── 📂 contact/
+    │   │   │   ├── 📂 footer/
+    │   │   │   ├── 📂 home/
+    │   │   │   ├── 📂 login/
+    │   │   │   ├── 📂 nav/
+    │   │   │   ├── 📂 Organizer-EMS/
+    │   │   │   ├── 📂 profile/
+    │   │   │   └── 📂 User-EMS/
+    │   │   ├── 📂 shared/
+    │   │   │    ├── 📂 guard/
+    │   │   │    │   └── 📄 auth.guard.ts
+    │   │   │    └── 📂 services/
+    │   │   │        ├── 📄 admin.service.ts
+    │   │   │        ├── 📄 api.service.ts
+    │   │   │        ├── 📄 event.service.ts
+    │   │   │        ├── 📄 file-upload.service.ts
+    │   │   │        ├── 📄 firebase.service.ts
+    │   │   │        ├── 📄 mail.service.ts
+    │   │   │        ├── 📄 toast-alert.service.ts
+    │   │   │        └── 📄 user.ts
+    │   │   ├──📂 assets/
+    │   │   │   ├── 📂 css/
+    │   │   │   ├── 📂 images/
+    │   │   │   └── 📂 js/
+    │   │   └──📂 environments/
+    │   │       ├── 📄 environment.prod.ts
+    │   │       └── 📄 environment.ts
+    │   ├── 📄 favicon.ico
+    │   ├── 📄 index.html
+    │   ├── 📄 main.ts
+    │   └── 📄 styles.css
+    ├── 📄 .editorconfig
+    ├── 📄 .firebaserc
+    ├── 📄 .gitignore
+    ├── 📄 angular.json
+    ├── 📄 database.rules.json
+    ├── 📄 firebase.json
+    ├── 📄 package.json
+    ├── 📄 package-lock.json
+    ├── 📄 proxy.local.json
+    ├── 📄 proxy.prod.json
+    ├── 📄 storage.rules
+    ├── 📄 tsconfig.app.json
+    ├── 📄 tsconfig.json
+    └── 📄 tsconfig.spec.json
+    ```
+
+1. **Flask API:**
+    ```bash
+    📂 Flask API/
+    │
+    ├── 📂 venv/
+    ├── 📂 app/
+    │    ├── 📄 main.py
+    │    ├── 📄 config.py
+    │    ├── 📄 email_templates.py
+    │    └── 📄 requirements.txt
+    ├── 📄 README.md
+    └── 📄 .gitignore 
+    ```
+
+
+
 ## Contributing
 
 Feel free to submit issues or pull requests. Contributions are welcome!
