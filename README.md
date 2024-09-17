@@ -64,7 +64,7 @@ This project is an Event Management System built using Angular and Firebase Real
             }
         }; 
         ```
-    - Add Firebase configuration to `src/environments/environment.ts` Production.
+    - Add Firebase configuration to `src/environments/environment.prod.ts` Production.
         ``` export const environment = {
             production: true,
             apiUrl: 'http://server-address.here/api',
