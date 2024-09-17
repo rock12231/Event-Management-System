@@ -94,7 +94,9 @@ This project is an Event Management System built using Angular and Firebase Real
 
 3. Add .env Configuration File for Email:
     - `.env` at root of the folder with
-    ```MAIL_USERNAME=your_gmail_username@gmail.com                                                          MAIL_PASSWORD=your_gmail_password```
+        ```
+        MAIL_USERNAME=your_gmail_username@gmail.com                                                          MAIL_PASSWORD=your_gmail_password
+        ```
 
 ## Running the Project
 
