@@ -11,7 +11,7 @@
                     <div class="card-body p-5">
                         <div class="row align-items-center gx-5">
                             <!-- create profile card  -->
-                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                            <div class="col text-center text-lg-start mb-8 mb-lg-0">
                                 <div class="bg-light p-4 rounded-4">
                                     <div class="text-primary fw-bolder mb-2">{{user.displayName}}</div>
                                     <div class="small fw-bolder">{{user.email}}</div>
@@ -19,11 +19,15 @@
                                     -muted">{{user.email}}</div>
                                 </div>
                             </div>
-                            <div class="col-lg-8">
-                                <div>
-                                    <img class="img-fluid" [src]="user.photoURL" alt="{{user.displayName}}" />
+                            <div class="col-lg-4 position-relative">
+                                <div class="profile-image rounded-circle overflow-hidden">
+                                    <img class="img-fluid w-100 h-100" [src]="user.photoURL ? user.photoURL : 'assets/images/user-profile.png'" alt="{{user.displayName}}" />
                                 </div>
-                            </div>
+                                <!-- Circular Upload Button with Icon in the Bottom Right -->
+                                <button class="upload-btn btn btn-primary rounded-circle position-absolute">
+                                    <i class="fas fa-upload"></i>
+                                </button>
+                            </div>                            
                         </div>
                     </div>
                 </div>
