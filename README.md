@@ -104,12 +104,12 @@ This project is an Event Management System built using Angular and Firebase Real
      ng serve
      ```
      
-    - Production Build
+    - Local Build:
         ```bash
         ng serve --configuration production
         ```
     
-    - For a production build:
+    - Production Build:
         ```bash
         ng build --configuration production
         ```
