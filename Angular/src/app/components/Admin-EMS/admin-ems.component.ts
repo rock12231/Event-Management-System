@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminService } from '../../shared/services/admin.service';
 import { CommonModule } from '@angular/common';
 import { ToastAlertService } from '../../shared/services/toast-alert.service';
+import { EventService } from '../../shared/services/event.service';
 
 @Component({
   selector: 'app-admin-ems',
@@ -15,11 +16,13 @@ export class AdminEMSComponent {
 
   // eventForm: FormGroup;
   allList: any
+  events: any
 
   constructor(
     private fb: FormBuilder, 
     private adminService: AdminService,
-    private toast: ToastAlertService
+    private toast: ToastAlertService,
+    private eventService: EventService
   ) {
     // this.eventForm = this.fb.group({
     //   title: [''],
@@ -34,6 +37,7 @@ export class AdminEMSComponent {
 
   async ngOnInit() {
     this.getDate()
+    this.getAllEvents()
   }
 
   async getDate() {
@@ -53,6 +57,23 @@ export class AdminEMSComponent {
         this.toast.showToast('Role updated successfully '+user.displayName, 'success')
       })
       .catch(err => console.error('Error editing role:', err));
+  }
+
+  async getAllEvents() {
+    this.events = await this.eventService.getAllEvents(100)
+    console.log('Events:', this.events)
+  }
+
+  deleteEvent(eventId: string) {
+    this.eventService.deleteEvent(eventId)
+      .then(() => console.log('Event deleted successfully'))
+      .catch(err => console.error('Error deleting event:', err));
+  }
+
+  editEvent(eventId: string) {
+    this.eventService.getEvent(eventId)
+      .then(() => console.log('Event edited successfully'))
+      .catch(err => console.error('Error editing event:', err));
   }
 
 }

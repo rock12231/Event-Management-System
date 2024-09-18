@@ -37,10 +37,13 @@ export class OrganizerEMSComponent {
   }
 
   async ngOnInit() {
-     // Call the getAllEvents function with a limit of 100 events
-     try {
-      this.events = await this.eventService.getAllEvents(100,this.user.uid);
-      console.log('Events:', this.events);  // Now this will log only the event values
+    this.getEvents();
+  }
+
+  async getEvents() {
+    try {
+      this.events = await this.eventService.getAllEvents(100);
+      console.log('Events:', this.events);
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -59,6 +62,7 @@ export class OrganizerEMSComponent {
       const response$ = await this.mailService.sendEventCreatedMail(eventData);
       response$.subscribe(response => {
         console.log('Event Created Mail Sent', response);
+        this.getEvents();
       });
     } catch (error) {
       console.error('Error sending email', error);

@@ -20,10 +20,9 @@ export class FirebaseService {
     public db: Database,
     private toastService: ToastAlertService
   ) {
-    // Listen for changes in authentication state
-    auth.onAuthStateChanged(async (user: any) => {
+     // Listen for changes in authentication state
+     auth.onAuthStateChanged(async (user: any) => {
       if (user) {
-            // await updateProfile(user, { displayName: "user" });
         // Fetch user role from Firebase Database
         const userRef = ref(this.db, `users/${user.uid}/info`);
         try {
@@ -32,15 +31,18 @@ export class FirebaseService {
             const userRole = snapshot.val();
             if (userRole.role) {
               user.role = userRole.role; // Update the user object with the role
+            } else {
+              user.role = 'user'; // Set a default role if not present
             }
           }
+
+          // After role is fetched, set the user data in localStorage
+          this.userData = user;
+          this.setLocalStorage(user); // Store the user data with the role
         } catch (error) {
           console.error('Error fetching user role:', error);
         }
 
-        // After role is fetched, set the user data in localStorage
-        this.userData = user;
-        this.setLocalStorage(user);
       } else {
         this.clearLocalStorage();
       }
@@ -72,6 +74,11 @@ export class FirebaseService {
 
 
   async logInWithEmailPassword(email: string, password: string) {
+    // check email and password are not empty
+    if (!email || !password) {
+      this.toastService.showToast('Please enter email and password', 'error', 'top-end');
+      return;
+    }
     try {
       const result = await signInWithEmailAndPassword(this.auth, email, password);
       const user = result.user;
@@ -161,13 +168,17 @@ export class FirebaseService {
 
   private setLocalStorage(user: any) {
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('user', JSON.stringify(user));
+      const storedUser = {
+        ...user,
+        role: user.role // Ensure the role is stored along with user data
+      };
+      localStorage.setItem('user', JSON.stringify(storedUser));
     }
   }
 
   private clearLocalStorage() {
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('user', 'null');
+      localStorage.removeItem('user');
     }
   }
 

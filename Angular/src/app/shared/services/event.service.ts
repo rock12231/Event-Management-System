@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Database, get, limitToLast, push, query, ref, set, update } from '@angular/fire/database';
 import { FirebaseService } from './firebase.service';
+import { ToastAlertService } from './toast-alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class EventService {
 
   constructor(
     private db: Database,
-    private fauth: FirebaseService
+    private fauth: FirebaseService,
+    private toastService: ToastAlertService
   ) {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('user')) {
       this.user = localStorage.getItem('user');
@@ -41,6 +43,7 @@ export class EventService {
           createdAt: new Date().toISOString(),
         };
         await push(eventRef, newEvent);
+        this.toastService.showToast('Event created successfully', 'success')
         console.log('Event created successfully');
       } else {
         console.error('You are not authorized to create events');
@@ -98,6 +101,83 @@ export class EventService {
       return [];
     }
   }
+
+
+  async getOrganizerEvents(limit: number, id?: any): Promise<any[]> {
+    const currentUser = await this.fauth.userData;
+    const uid = this.user.uid ? this.user.uid : currentUser.uid;
+    if (!uid) {
+      console.error('User is not authenticated');
+      return [];
+    }
+    
+    const eventRef = ref(this.db, `events/`);
+    const queryRef = query(eventRef, limitToLast(limit));
+    const snapshot = await get(queryRef);
+  
+    console.log('Snapshot:', snapshot.val());
+    if (snapshot.exists()) {
+      const events = snapshot.val();
+  
+      // Convert the object into an array and filter events where the organizer matches the uid
+      return Object.keys(events).flatMap((userId) => {
+        return Object.keys(events[userId])
+          .filter((eventId) => {
+            const event = events[userId][eventId];
+            return event.organizer === uid; // Filter for events where organizer === uid
+          })
+          .map((eventId) => {
+            const event = events[userId][eventId];
+            return {
+              eventId,
+              userId,
+              ...event,
+            };
+          });
+      });
+    } else {
+      console.log('No data available for events');
+      return [];
+    }
+  }
+
+  async getUserEvents(limit: number, id?: any): Promise<any[]> {
+    const currentUser = await this.fauth.userData;
+    const uid = this.user.uid ? this.user.uid : currentUser.uid;
+    if (!uid) {
+      console.error('User is not authenticated');
+      return [];
+    }
+    
+    const eventRef = ref(this.db, `events/`);
+    const queryRef = query(eventRef, limitToLast(limit));
+    const snapshot = await get(queryRef);
+  
+    console.log('Snapshot:', snapshot.val());
+    if (snapshot.exists()) {
+      const events = snapshot.val();
+  
+      // Convert the object into an array with the format { eventId, ...eventDetails } also add userId
+      return Object.keys(events).flatMap((userId) => {
+        return Object.keys(events[userId]).filter((eventId) => {
+          const event = events[userId][eventId];
+          // Check if the current user's ID is in the participants list
+          return event.participants && event.participants[uid];
+        }).map((eventId) => {
+          const event = events[userId][eventId];
+          return {
+            eventId,
+            userId,
+            ...event,
+          };
+        });
+      });
+    } else {
+      console.log('No data available for events');
+      return [];
+    }
+  }
+  
 
   // Function to update an event
   async updateEvent(eventId: string, updatedData: any): Promise<void> {

@@ -5,10 +5,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                 <li class="nav-item"><a class="nav-link" (click)="navHome()" [ngClass]="{'active': activeRoute === '/'} ">Home</a></li>
-                <li *ngIf="fauth.userData"  class="nav-item"><a class="nav-link" (click)="navDashboard()" [ngClass]="{'active': activeRoute === '/dashboard'} ">Dashboard</a></li>
+                <li *ngIf="fauth.userData"  class="nav-item"><a class="nav-link" (click)="navDashboard()" [ngClass]="{'active': isDashboardActive}">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="navAbout()" [ngClass]="{'active': activeRoute === '/about'} ">About</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="navContact()" [ngClass]="{'active': activeRoute === '/contact'} ">Contact</a></li>
-                <li *ngIf="fauth.userData" class="nav-item"><a class="nav-link" (click)="navProfile()" [ngClass]="{'active': activeRoute === '/profile'} ">{{user?.displayName | titlecase}}</a></li>
+                <app-notifications></app-notifications>
+                <li *ngIf="fauth.userData" class="nav-item"><a class="nav-link" (click)="navProfile()" [ngClass]="{'active': isProfileActive}">{{user?.displayName | titlecase}}</a></li>
                 <li *ngIf="fauth.userData" class="nav-item"><a class="nav-link" (click)="logout()" >Logout</a></li>
                 <li *ngIf="!fauth.userData" class="nav-item"><a class="nav-link" (click)="navLogin()" [ngClass]="{'active': activeRoute === '/login'} ">Login</a></li>
             </ul>

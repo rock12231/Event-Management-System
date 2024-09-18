@@ -4,6 +4,7 @@ import { EventService } from '../../shared/services/event.service';
 import { CommonModule } from '@angular/common';
 import { Database, get, ref } from '@angular/fire/database';
 import { MailService } from '../../shared/services/mail.service';
+import { ToastAlertService } from '../../shared/services/toast-alert.service';
 
 @Component({
   selector: 'app-user-ems',
@@ -15,13 +16,14 @@ import { MailService } from '../../shared/services/mail.service';
 export class UserEMSComponent {
   eventForm: FormGroup;
   events: any
-  user : any
+  user: any
 
   constructor(
-    private fb: FormBuilder, 
-    private eventService: EventService, 
+    private fb: FormBuilder,
+    private eventService: EventService,
     private db: Database,
-    private mailService: MailService
+    private mailService: MailService,
+    private toastService: ToastAlertService
   ) {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('user')) {
       this.user = localStorage.getItem('user');
@@ -38,9 +40,13 @@ export class UserEMSComponent {
   }
 
 
-  async ngOnInit() {
-     // Call the getAllEvents function with a limit of 100 events
-     try {
+  ngOnInit() {
+    this.getEvents();
+  }
+
+  async getEvents() {
+    // Call the getAllEvents function with a limit of 100 events
+    try {
       this.events = await this.eventService.getAllEvents(100);
       console.log('Events:', this.events);  // Now this will log only the event values
     } catch (error) {
@@ -48,11 +54,14 @@ export class UserEMSComponent {
     }
   }
 
-
   joinEvent(event: any) {
     const url = `${event.userId}/${event.eventId}`;
     this.eventService.joinEvent(url)
-      .then(() => console.log('Event joined successfully'))
+      .then(async () => {
+        this.toastService.showToast('Event joined successfully', 'success');
+        console.log('Event joined successfully')
+        await this.getEvents()
+      })
       .catch(err => console.error('Error joining event:', err));
   }
 

@@ -103,11 +103,11 @@ This project is an Event Management System built using Angular and Firebase Real
 
 1. **Angular:** 
    - Start the Angular development server:
-     ```bash
-     ng serve
-     ```
+        ```bash
+        ng serve
+        ```
      
-    - Local Build:
+    - Local Run With Production Config:
         ```bash
         ng serve --configuration production
         ```

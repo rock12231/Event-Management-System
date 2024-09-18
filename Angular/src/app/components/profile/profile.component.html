@@ -13,7 +13,7 @@
                             <!-- create profile card  -->
                             <div class="col text-center text-lg-start mb-8 mb-lg-0">
                                 <div class="bg-light p-4 rounded-4">
-                                    <div class="text-primary fw-bolder mb-2">{{user.displayName}}</div>
+                                    <div class="text-primary fw-bolder mb-2">{{user.displayName|titlecase}}</div>
                                     <div class="small fw-bolder">{{user.email}}</div>
                                     <div class="small text
                                     -muted">{{user.email}}</div>
@@ -34,7 +34,7 @@
             </section>
         </div>
     </div>
-    <div class="text-center mb-5">
+    <div *ngIf="user.role != 'admin'" class="text-center mb-5">
         <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Your Events</span></h1>
     </div>
     <div class="row gx-5 justify-content-center">
@@ -42,34 +42,28 @@
             <!-- Experience Section-->
             <section>
                 <!-- Experience Card 1-->
-                <div class="card shadow border-0 rounded-4 mb-5">
+                <div *ngFor="let event of events" class="card shadow border-0 rounded-4 mb-5">
                     <div class="card-body p-5">
                         <div class="row align-items-center gx-5">
-                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                            <div class="col text-center text-lg-start mb-8 mb-lg-0">
                                 <div class="bg-light p-4 rounded-4">
-                                    <div class="text-primary fw-bolder mb-2">2019 - Present</div>
-                                    <div class="small fw-bolder">Web Developer</div>
-                                    <div class="small text-muted">Stark Industries</div>
-                                    <div class="small text-muted">Los Angeles, CA</div>
+                                    <div class="fw-bolder text-primary mb-2">{{event.title | titlecase}}</div>
+                                    <div class="small fw-bolder mb-2"><strong>Date:</strong> {{ event.startDate }} TO {{ event.endDate }}</div>
+                                    <div class="small fw-bolder mb-2"><strong>Time:</strong> {{ event.startTime }} TO {{ event.endTime }} </div>
+                                    <ng-container *ngIf="event.participants && event.participants[user?.uid]; else joinButton">
+                                        <button class="btn btn-danger" >Withdraw from Event</button>
+                                    </ng-container>
+                                    <ng-template #joinButton>
+                                        <ng-container *ngIf="user?.role === 'organizer'; else joinButton">
+                                            <button class="btn btn-primary" >Edit Event</button>
+                                        </ng-container>
+                                        <ng-template #joinButton>
+                                            <button class="btn btn-primary">Join Event</button>
+                                        </ng-template>
+                                    </ng-template>
                                 </div>
                             </div>
-                            <div class="col-lg-8"><div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus laudantium, voluptatem quis repellendus eaque sit animi illo ipsam amet officiis corporis sed aliquam non voluptate corrupti excepturi maxime porro fuga.</div></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Experience Card 2-->
-                <div class="card shadow border-0 rounded-4 mb-5">
-                    <div class="card-body p-5">
-                        <div class="row align-items-center gx-5">
-                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                <div class="bg-light p-4 rounded-4">
-                                    <div class="text-primary fw-bolder mb-2">2017 - 2019</div>
-                                    <div class="small fw-bolder">SEM Specialist</div>
-                                    <div class="small text-muted">Wayne Enterprises</div>
-                                    <div class="small text-muted">Gotham City, NY</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-8"><div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus laudantium, voluptatem quis repellendus eaque sit animi illo ipsam amet officiis corporis sed aliquam non voluptate corrupti excepturi maxime porro fuga.</div></div>
+                            <div class="col-lg-4">{{event.description}}</div>
                         </div>
                     </div>
                 </div>
