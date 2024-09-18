@@ -101,7 +101,7 @@ This project is an Event Management System built using Angular and Firebase Real
 4. API Documentation:
     1. **/created**
         - *Request:*
-            curl -X POST http://127.0.0.1:5000/created \
+            curl -X POST https://ems-r7a4.onrender.com/created \
             -H "Content-Type: application/json" \
             -d '{
             "email": "recipient@example.com",
@@ -117,7 +117,7 @@ This project is an Event Management System built using Angular and Firebase Real
 
     2. **/participated**
         - *Request:*
-                curl -X POST http://127.0.0.1:5000/participated \
+                curl -X POST https://ems-r7a4.onrender.com/participated \
                 -H "Content-Type: application/json" \
                 -d '{
                 "email": "recipient@example.com",
@@ -132,7 +132,7 @@ This project is an Event Management System built using Angular and Firebase Real
 
     3. **/new**
         - *Request:*
-            curl -X POST http://127.0.0.1:5000/new \
+            curl -X POST https://ems-r7a4.onrender.com/new \
             -H "Content-Type: application/json" \
             -d '{
             "email": "recipient@example.com",

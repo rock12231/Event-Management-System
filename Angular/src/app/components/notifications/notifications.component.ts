@@ -50,8 +50,13 @@ export class NotificationsComponent implements OnDestroy {
 
   toggleNotifications() {
     this.isNotificationsVisible = !this.isNotificationsVisible;
+  
+    // If notifications dropdown is now visible, mark all notifications as read
+    if (this.isNotificationsVisible) {
+      this.unreadNotificationsCount = 0;
+    }
   }
-
+  
   // Check if the click happened outside the notification dropdown
   onDocumentClick(event: MouseEvent) {
     const clickedInside = this.elRef.nativeElement.contains(event.target);
