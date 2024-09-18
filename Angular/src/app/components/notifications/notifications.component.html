@@ -1,18 +1,15 @@
 <li *ngIf="fauth.userData" class="nav-item dropdown position-relative">
     <a class="nav-link" (click)="toggleNotifications()">
         <i class="bi bi-bell"></i>
-        <!-- Notification Badge -->
         <span *ngIf="unreadNotificationsCount > 0" class="position-absolute translate-middle badge rounded-pill bg-danger">
             {{unreadNotificationsCount}}
         </span>
     </a>
 
-    <!-- Notification List -->
     <div class="dropdown-menu dropdown-menu-end shadow-lg" [ngClass]="{'show': isNotificationsVisible}" aria-labelledby="notificationDropdown">
         <ng-container *ngIf="notifications && notifications.length > 0; else noNotifications">
             <div *ngFor="let notification of notifications" class="dropdown-item d-flex align-items-start">
                 <div class="me-2">
-                    <!-- Notification Icon -->
                     <i [class]="notification.icon"></i>
                 </div>
                 <div>

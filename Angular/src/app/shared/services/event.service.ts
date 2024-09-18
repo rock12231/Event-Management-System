@@ -21,12 +21,12 @@ export class EventService {
     }
   }
 
-  // Function to create event (only for Organizer role)
   async createEvent(eventData: any): Promise<void> {
-    const currentUser = await this.fauth.userData
+    const currentUser = await this.fauth.userData;
     if (currentUser) {
       const uid = currentUser.uid;
       const name = currentUser.displayName;
+  
       // Check if the user has the 'Organizer' role
       const isOrganizer = await this.fauth.isRole(uid, 'organizer');
       if (isOrganizer) {
@@ -42,14 +42,22 @@ export class EventService {
           organizerName: name,
           createdAt: new Date().toISOString(),
         };
+  
+        // Push new event to Firebase
         await push(eventRef, newEvent);
-        this.toastService.showToast('Event created successfully', 'success')
-        console.log('Event created successfully');
+  
+        // Create and save a notification
+        const notificationMessage = `You have successfully created the event: ${eventData.title}.`;
+        await this.createNotification(uid, newEvent.title, notificationMessage);
+  
+        // Show success toast
+        this.toastService.showToast('Event created successfully', 'success');
+        console.log('Event and notification created successfully');
       } else {
         console.error('You are not authorized to create events');
       }
     }
-  }
+  }  
 
   // Function to get a specific event by event ID
   async getEvent(eventId: string): Promise<any> {
@@ -178,8 +186,6 @@ export class EventService {
     }
   }
   
-
-  // Function to update an event
   async updateEvent(eventId: string, updatedData: any): Promise<void> {
     const currentUser = await this.fauth.userData
     const uid = currentUser.uid;
@@ -204,7 +210,6 @@ export class EventService {
       });
   }
 
-
   joinEvent(eventId: string): Promise<void> {
     const currentUser = this.fauth.userData;
     if (currentUser) {
@@ -222,5 +227,20 @@ export class EventService {
       return Promise.reject('User is not authenticated');
     }
   }
+
+  async createNotification(uid: string, title: string, message: string): Promise<void> {
+    const notification = {
+      title,
+      uid,
+      message,
+      timestamp: new Date().toISOString(),
+      icon: 'bi bi-calendar-event',
+    };
+  
+    const notificationsRef = ref(this.db, `notifications`);
+    await push(notificationsRef, notification);
+    console.log('Notification created successfully');
+  }
+  
 
 }

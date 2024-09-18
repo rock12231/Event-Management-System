@@ -9,10 +9,10 @@ from email_templates import EVENT_CREATED_TEMPLATE, EVENT_PARTICIPATED_TEMPLATE,
 app = Flask(__name__)
 app.config.from_object(Config)
 
-CORS(app, origins=["http://localhost:4200", "*"])
+CORS(app, origins=["http://localhost:4200", "https://ems-r7a4.onrender.com"])
 
 # Initialize Firebase Admin SDK //     "/etc/secrets/<filename>"
-cred = credentials.Certificate('credentials.json')  # Path to your service account key JSON
+cred = credentials.Certificate('credentials.json')
 firebase_admin.initialize_app(cred)
 
 # Initialize Flask-Mail

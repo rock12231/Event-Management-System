@@ -98,6 +98,55 @@ This project is an Event Management System built using Angular and Firebase Real
         MAIL_USERNAME=your_gmail_username@gmail.com
         MAIL_PASSWORD=your_gmail_password
         ```
+4. API Documentation:
+    1. **/created**
+        - *Request:*
+            curl -X POST http://127.0.0.1:5000/created \
+            -H "Content-Type: application/json" \
+            -d '{
+            "email": "recipient@example.com",
+            "name": "John Doe",
+            "event_title": "Annual Conference",
+            "event_date": "2024-09-30",
+            "event_location": "New York City"
+            }'
+        - *Response:* 
+            {
+                "message": "Event created email sent"
+            }
+
+    2. **/participated**
+        - *Request:*
+                curl -X POST http://127.0.0.1:5000/participated \
+                -H "Content-Type: application/json" \
+                -d '{
+                "email": "recipient@example.com",
+                "name": "John Doe",
+                "event_title": "Annual Conference",
+                "event_date": "2024-09-30"
+                }'
+        - *Response:* 
+            {
+                "message": "Event created email sent"
+            }
+
+    3. **/new**
+        - *Request:*
+            curl -X POST http://127.0.0.1:5000/new \
+            -H "Content-Type: application/json" \
+            -d '{
+            "email": "recipient@example.com",
+            "name": "John Doe",
+            "event_title": "Tech Expo 2024",
+            "event_date": "2024-11-10",
+            "event_location": "San Francisco"
+            }'
+        - *Response:* 
+            {
+                "message": "Event created email sent"
+            }
+
+
 
 ## Running the Project
 
@@ -126,6 +175,8 @@ This project is an Event Management System built using Angular and Firebase Real
      ```
    - Global Link: `https://ems-r7a4.onrender.com/`
         - *Note* : Firts api hit take 50 sec to start the server , `Render.com` Policy
+
+        
 
 
 ## Project Structure 
