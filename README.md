@@ -82,6 +82,187 @@ This project is an Event Management System built using Angular and Firebase Real
         ```
     - Configure Firebase authentication in your Angular app.
 
+3. Firebase Realtime Database:
+    ```base
+    {
+    "events": {
+        "cZPh70PBM7N3LhTI41nv9KMe8cq1": {
+        "-O73d-QB8QGi5znCd2Sv": {
+            "createdAt": "2024-09-18T10:18:32.802Z",
+            "description": "Event of the day Event of the day Event of the day Event of the day Event of the day Event of the day Event of the day Event of the day Event of the day ",
+            "endDate": "2024-09-28",
+            "endTime": "15:52",
+            "organizer": "cZPh70PBM7N3LhTI41nv9KMe8cq1",
+            "organizerName": "Organizer",
+            "startDate": "2024-09-28",
+            "startTime": "15:52",
+            "title": "Event"
+        },
+        "-O74Lz-shbTPptDLvojh": {
+            "createdAt": "2024-09-18T13:39:25.743Z",
+            "description": "bjhbkujh",
+            "endDate": "2024-09-21",
+            "endTime": "19:13",
+            "organizer": "cZPh70PBM7N3LhTI41nv9KMe8cq1",
+            "organizerName": "Organizer",
+            "startDate": "2024-09-20",
+            "startTime": "22:09",
+            "title": "test"
+        },
+        "-O74O3Cxq_sNwcb9DzOu": {
+            "createdAt": "2024-09-18T13:48:31.352Z",
+            "description": "New event notification test New event notification test New event notification test New event notification test ",
+            "endDate": "2024-10-02",
+            "endTime": "19:23",
+            "organizer": "cZPh70PBM7N3LhTI41nv9KMe8cq1",
+            "organizerName": "Organizer",
+            "startDate": "2024-09-21",
+            "startTime": "19:23",
+            "title": "New event notification test "
+        },
+        "-O762Y1NCsRNeL6yxWxq": {
+            "createdAt": "2024-09-18T21:33:44.055Z",
+            "description": "ABC event TestABC event TestABC event TestABC event TestABC event Test",
+            "endDate": "2024-09-26",
+            "endTime": "03:06",
+            "organizer": "cZPh70PBM7N3LhTI41nv9KMe8cq1",
+            "organizerName": "Organizer",
+            "participants": {
+            "AN9wf3tpPwWeQPjQselVxpQ9yMj1": true
+            },
+            "startDate": "2024-09-20",
+            "startTime": "07:03",
+            "title": "ABC event Test"
+        },
+        "-O7649tfO9yX1c4QQuQJ": {
+            "createdAt": "2024-09-18T21:40:49.460Z",
+            "description": "ABCD Event test ABCD Event test ABCD Event test ABCD Event test ABCD Event test ABCD Event test ",
+            "endDate": "2024-09-27",
+            "endTime": "03:13",
+            "organizer": "cZPh70PBM7N3LhTI41nv9KMe8cq1",
+            "organizerName": "Organizer",
+            "participants": {
+            "AN9wf3tpPwWeQPjQselVxpQ9yMj1": true
+            },
+            "startDate": "2024-09-20",
+            "startTime": "03:13",
+            "title": "ABCD Event test "
+        }
+        },
+        "uIOxOLE8SrZB5n9yiQnhrAbGqb22": {
+        "-O6lXvL9pS4J8RfbpbCI": {
+            "createdAt": "2024-09-14T17:19:11.535Z",
+            "description": "Hacker House event",
+            "endDate": "2024-09-30",
+            "endTime": "00:00",
+            "organizer": "uIOxOLE8SrZB5n9yiQnhrAbGqb22",
+            "participants": {
+            "734KGqVrAEeKRRiUrxg8EezjyDq2": true,
+            "AN9wf3tpPwWeQPjQselVxpQ9yMj1": true,
+            "uIOxOLE8SrZB5n9yiQnhrAbGqb22": true,
+            "vNyYgCS4CwhKcMsgnBBGCGqJLMn1": true
+            },
+            "startDate": "2024-09-23",
+            "startTime": "00:00",
+            "title": "HH GOA"
+        },
+        "-O6lZ6KMeilXakZ4lu-S": {
+            "createdAt": "2024-09-14T17:24:22.753Z",
+            "description": "dvdvdv",
+            "endDate": "2024-09-29",
+            "endTime": "22:59",
+            "organizer": "uIOxOLE8SrZB5n9yiQnhrAbGqb22",
+            "participants": {
+            "734KGqVrAEeKRRiUrxg8EezjyDq2": true,
+            "AN9wf3tpPwWeQPjQselVxpQ9yMj1": true
+            },
+            "startDate": "2024-09-15",
+            "startTime": "22:57",
+            "title": "csdcsdc"
+        }
+        },
+        "vNyYgCS4CwhKcMsgnBBGCGqJLMn1": {
+        "-O6rvj0L1doFDR7GrHCZ": {
+            "createdAt": "2024-09-15T23:05:17.522Z",
+            "description": "sgrgrg",
+            "endDate": "2024-09-28",
+            "endTime": "04:40",
+            "organizer": "vNyYgCS4CwhKcMsgnBBGCGqJLMn1",
+            "organizerName": "Avinash",
+            "participants": {
+            "734KGqVrAEeKRRiUrxg8EezjyDq2": true,
+            "AN9wf3tpPwWeQPjQselVxpQ9yMj1": true
+            },
+            "startDate": "2024-09-17",
+            "startTime": "08:35",
+            "title": "aada"
+        },
+        "-O6rvlfcZV9r2HcNHfyT": {
+            "createdAt": "2024-09-15T23:05:28.421Z",
+            "description": "sgrgrg",
+            "endDate": "2024-09-28",
+            "endTime": "04:40",
+            "organizer": "vNyYgCS4CwhKcMsgnBBGCGqJLMn1",
+            "startDate": "2024-09-17",
+            "startTime": "08:35",
+            "title": "fesgsg"
+        }
+        }
+    },
+    "notifications": {
+        "-O7649y7pCH2W-_buDFF": {
+        "icon": "bi bi-calendar-event",
+        "message": "You have successfully created the event: ABCD Event test .",
+        "timestamp": "2024-09-18T21:40:49.748Z",
+        "title": "ABCD Event test ",
+        "uid": "cZPh70PBM7N3LhTI41nv9KMe8cq1"
+        }
+    },
+    "users": {
+        "AN9wf3tpPwWeQPjQselVxpQ9yMj1": {
+        "info": {
+            "displayName": "User",
+            "email": "user@user.com",
+            "emailVerified": true,
+            "joinAt": "2024-09-16 17:23:13",
+            "role": "user",
+            "uid": "AN9wf3tpPwWeQPjQselVxpQ9yMj1"
+        }
+        },
+        "RjhXYBOeufaf7DsjWgwiiemVbK53": {
+        "Logs": {
+            "-O7BPRBYItjOSyPUruq8": {
+            "timestamp": "2024-09-19T22:31:50.819Z",
+            "url": "https://event-management-system-da757.web.app/"
+            },
+            "-O7BPXRUXLYaSg7YCj5k": {
+            "timestamp": "2024-09-19T22:32:16.708Z",
+            "url": "https://event-management-system-da757.web.app/contact"
+            }
+        },
+        "info": {
+            "displayName": "Admin",
+            "email": "admin@admin.com",
+            "emailVerified": true,
+            "joinAt": "2024-09-16 17:34:09",
+            "role": "admin",
+            "uid": "RjhXYBOeufaf7DsjWgwiiemVbK53"
+        }
+        },
+        "cZPh70PBM7N3LhTI41nv9KMe8cq1": {
+        "info": {
+            "displayName": "Organizer",
+            "email": "organizer@organizer.com",
+            "emailVerified": true,
+            "joinAt": "2024-09-16 17:40:47",
+            "role": "organizer",
+            "uid": "cZPh70PBM7N3LhTI41nv9KMe8cq1"
+        }
+        }
+    }
+    }
+    ```
+
 ### 3. Flask Setup
 
 1. Install Flask and Firebase Admin SDK:

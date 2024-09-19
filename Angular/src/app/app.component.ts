@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { LogService } from './shared/services/log.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,12 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'projectTest';
+  title = 'EMS';
+
+  constructor(private userLogService: LogService) {}
+
+  ngOnInit() {
+    this.userLogService.initLogListener();
+  }
+
 }
