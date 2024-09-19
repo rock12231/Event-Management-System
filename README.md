@@ -276,6 +276,9 @@ Your browser does not support the video tag.
 Your browser does not support the video tag.
 </video>
 
+[![Watch the video](https://github.com/rock12231/Event-Management-System/blob/master/Video/Admin.mp4)](https://github.com/rock12231/Event-Management-System/blob/master/Video/Admin.mp4)
+
+
 ## Contributing
 
 Feel free to submit issues or pull requests. Contributions are welcome!
