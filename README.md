@@ -261,9 +261,20 @@ This project is an Event Management System built using Angular and Firebase Real
 
 ## Video
 
-- https://github.com/rock12231/Event-Management-System/tree/master/Video/Admin.mp4
--  https://github.com/rock12231/Event-Management-System/tree/master/Video/Organizer.mp4
--  https://github.com/rock12231/Event-Management-System/tree/master/Video/User.mp4
+<video width="320" height="240" controls>
+<source src="https://github.com/rock12231/Event-Management-System/blob/master/Video/Admin.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="320" height="240" controls>
+<source src="https://github.com/rock12231/Event-Management-System/blob/master/Video/Organizer.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="320" height="240" controls>
+<source src="https://github.com/rock12231/Event-Management-System/blob/master/Video/User.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 ## Contributing
 
