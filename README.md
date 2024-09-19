@@ -259,7 +259,11 @@ This project is an Event Management System built using Angular and Firebase Real
     └── 📄 .gitignore 
     ```
 
+## Video
 
+- https://github.com/rock12231/Event-Management-System/tree/master/Video/Admin.mp4
+-  https://github.com/rock12231/Event-Management-System/tree/master/Video/Organizer.mp4
+-  https://github.com/rock12231/Event-Management-System/tree/master/Video/User.mp4
 
 ## Contributing
 
