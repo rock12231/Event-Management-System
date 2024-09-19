@@ -267,8 +267,8 @@ This project is an Event Management System built using Angular and Firebase Real
 
 ## UML & Flow
 
-<img src="https://github.com/rock12231/Event-Management-System/master/Doc/UML.jpeg" height="640">
-<img src="https://github.com/rock12231/Event-Management-System/master/Doc/UserFlow.jpeg" height="640">
+<img src="https://github.com/rock12231/Event-Management-System/blob/master/Doc/UML.jpeg" height="640">
+<img src="https://github.com/rock12231/Event-Management-System/blob/master/Doc/UserFlow.jpeg" height="640">
 
 
 ## Contributing
