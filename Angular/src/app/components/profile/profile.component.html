@@ -21,13 +21,18 @@
                             </div>
                             <div class="col-lg-4 position-relative">
                                 <div class="profile-image rounded-circle overflow-hidden">
-                                    <img class="img-fluid w-100 h-100" [src]="user.photoURL ? user.photoURL : 'assets/images/user-profile.png'" alt="{{user.displayName}}" />
+                                  <img class="img-fluid w-100 h-100" 
+                                       [src]="user.photoURL ? user.photoURL : 'assets/images/user-profile.jpg'" 
+                                       alt="{{user.displayName}}" />
                                 </div>
-                                <!-- Circular Upload Button with Icon in the Bottom Right -->
-                                <button class="upload-btn btn btn-primary rounded-circle position-absolute">
-                                    <i class="fas fa-upload"></i>
-                                </button>
-                            </div>                            
+                              
+                                <!-- Upload Button Positioned at the Bottom Right -->
+                                <label class="upload-btn btn btn-primary rounded-circle position-absolute bottom-0 end-0" style="width: 40px; height: 40px; cursor: pointer;">
+                                  <i class="fas fa-upload"></i>
+                                  <input type="file" (change)="uploadProfilePhoto($event)" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;">
+                                </label>
+                              </div>
+                                                        
                         </div>
                     </div>
                 </div>

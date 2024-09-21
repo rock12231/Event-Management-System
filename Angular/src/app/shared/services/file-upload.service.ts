@@ -8,41 +8,26 @@ export class FileUploadService {
 
   constructor(private fstorage: Storage) { }
 
-  async imgUpload(files: FileList, userId: string, challenge: string, meal?: string): Promise<string[]> {
-    console.log(challenge);
-    const uploadPromises: Promise<string>[] = [];
+async imgUpload(files: FileList, userId: string): Promise<string[]> {
+  const uploadPromises: Promise<string>[] = [];
   
-    for (let i = 0; i < files.length; i++) {
-      const file = files.item(i);
-  
-      if (file) {
-        let storageRefPath = `Challenge/${userId}`;
-  
-        if (challenge === 'profile') {
-          storageRefPath += `/profile/avtar.jpg`;
-        } else if (challenge) {
-          if (meal) {
-            storageRefPath += `/${challenge}/${meal}`;
-          } else {
-            storageRefPath += `/${challenge}/${file.name}`;
-          }
-        } else {
-          storageRefPath += `/default/${file.name}`;
-        }
-  
-        const storageRef = ref(this.fstorage, storageRefPath);
-        uploadPromises.push(this.uploadFileAndGetURL(storageRef, file));
-      }
-    }
-  
-    try {
-      const downloadURLs = await Promise.all(uploadPromises);
-      return downloadURLs;
-    } catch (error) {
-      console.error('Upload failed', error);
-      throw error;
+  for (let i = 0; i < files.length; i++) {
+    const file = files.item(i);
+    if (file) {
+      let storageRefPath = `users/${userId}/profile/avtar.jpg`;
+      const storageRef = ref(this.fstorage, storageRefPath);
+      uploadPromises.push(this.uploadFileAndGetURL(storageRef, file));
     }
   }
+  
+  try {
+    return await Promise.all(uploadPromises);
+  } catch (error) {
+    console.error('Upload failed', error);
+    throw error;
+  }
+}
+
   
   private uploadFileAndGetURL(storageRef: any, file: File): Promise<string> {
     return new Promise((resolve, reject) => {
