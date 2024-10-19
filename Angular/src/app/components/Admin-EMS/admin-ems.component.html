@@ -17,9 +17,9 @@
                                 <p>Join At: {{ user.joinAt }}</p>
                             </div>
                             <div class="d-block">
-                                <img class="img-fluid" width="140px" [src]="user.photoURL ? user.photoURL : 'assets/images/user-profile.png'" alt="{{ user.displayName }}" />
+                                <img class="img-fluid" width="140px" [src]="user.photoURL ? user.photoURL : 'assets/images/User-Profile.png'" alt="{{ user.displayName }}" />
                                 <hr>
-                                <select #role (change)="editRole(user, role.value)" class="form-select" aria-label="Default select example">
+                                <select *ngIf="user.email != 'admin@admin.com' && user.email != 'organizer@organizer.com' && user.email != 'user@user.com' " #role (change)="editRole(user, role.value)" class="form-select" aria-label="Default select example">
                                     <option selected>Current Role {{user.role|titlecase}}</option>
                                     <option value="user">User</option>
                                     <option value="admin">Admin</option>
